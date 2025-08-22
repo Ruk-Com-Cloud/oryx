@@ -293,12 +293,12 @@ func handleHTTPService(ctx context.Context, handler *http.ServeMux) error {
 		return err
 	}
 
-	proxy1985, err := httpCreateProxy("http://127.0.0.1:1985")
+	proxy1985, err := httpCreateProxy(envSrsApiUrl())
 	if err != nil {
 		return err
 	}
 
-	proxyWhxp, err := httpCreateProxy("http://127.0.0.1:1985")
+	proxyWhxp, err := httpCreateProxy(envSrsApiUrl())
 	if err != nil {
 		return err
 	}
@@ -1690,7 +1690,7 @@ func handleMgmtStreamsKickoff(ctx context.Context, handler *http.ServeMux) {
 
 			// Whether client exists in SRS server.
 			var code int
-			clientURL := fmt.Sprintf("http://127.0.0.1:1985/api/v1/clients/%v", streamObject.Client)
+			clientURL := fmt.Sprintf("%s/api/v1/clients/%v", envSrsApiUrl(), streamObject.Client)
 			if r0, body, err := requestClient(ctx, clientURL, http.MethodGet); err != nil {
 				return errors.Wrapf(err, "http query client %v", clientURL)
 			} else if r0 != 0 && r0 != ErrorRtmpClientNotFound {

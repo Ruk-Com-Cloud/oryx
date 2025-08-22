@@ -494,6 +494,13 @@ func envYtdlProxy() string {
 	return os.Getenv("YTDL_PROXY")
 }
 
+func envSrsApiUrl() string {
+	if url := os.Getenv("SRS_API_URL"); url != "" {
+		return url
+	}
+	return "http://127.0.0.1:1985"
+}
+
 // rdb is a global redis client object.
 var rdb *redis.Client
 
@@ -707,7 +714,7 @@ func srsGenerateConfig(ctx context.Context) error {
 		// TODO: FIXME: Remove it after SRS merged https://github.com/ossrs/srs/pull/3768
 		return time.Now().String(), nil
 
-		/*api := "http://127.0.0.1:1985/api/v1/raw?rpc=reload-fetch"
+		/*api := fmt.Sprintf("%s/api/v1/raw?rpc=reload-fetch", envSrsApiUrl())
 		req, err := http.NewRequestWithContext(ctx, "GET", api, nil)
 		if err != nil {
 			return "", errors.Wrapf(err, "reload fetch srs %v", api)
@@ -757,7 +764,7 @@ func srsGenerateConfig(ctx context.Context) error {
 
 	// Reload SRS to apply the new config.
 	if true {
-		api := "http://127.0.0.1:1985/api/v1/raw?rpc=reload"
+		api := fmt.Sprintf("%s/api/v1/raw?rpc=reload", envSrsApiUrl())
 		res, err := http.DefaultClient.Get(api)
 		if err != nil {
 			return errors.Wrapf(err, "reload srs %v", api)
