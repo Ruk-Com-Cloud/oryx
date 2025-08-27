@@ -16,7 +16,7 @@ lint:
 test: lint
 	npm run test
 
-build: build-cn npm
+build: build-en npm
 
 build-cn: npm
 	env PUBLIC_URL=/mgmt REACT_APP_LOCALE=zh BUILD_PATH=build/zh npm run build
